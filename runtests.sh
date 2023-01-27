@@ -1,2 +1,2 @@
 echo "Run test suites! "
-python -m unittest discover tests 
+python3 -m unittest discover tests 

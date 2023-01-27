@@ -136,8 +136,8 @@ class InformedRRTStar():
     def informed_sample(self, cMax, cMin, xCenter, C):
         if cMax < float('inf'):
             r = [cMax / 2.0,
-                 math.sqrt(cMax**2 - cMin**2) / 2.0,
-                 math.sqrt(cMax**2 - cMin**2) / 2.0]
+                 math.sqrt(abs(cMax**2 - cMin**2)) / 2.0,
+                 math.sqrt(abs(cMax**2 - cMin**2)) / 2.0]
             L = np.diag(r)
             xBall = self.sampleUnitBall()
             rnd = np.dot(np.dot(C, L), xBall) + xCenter
@@ -270,7 +270,7 @@ class InformedRRTStar():
 
         plt.plot(self.start.x, self.start.y, "xr")
         plt.plot(self.goal.x, self.goal.y, "xr")
-        plt.axis([-2, 15, -2, 15])
+        plt.axis([self.minrand, self.maxrand, self.minrand, self.maxrand])
         plt.grid(True)
         plt.pause(0.01)
 
@@ -318,7 +318,7 @@ def main():
 
     # Set params
     rrt = InformedRRTStar(start=[0, 0], goal=[5, 10],
-                          randArea=[-2, 15], obstacleList=obstacleList)
+                          randArea=[-15, 15], obstacleList=obstacleList)
     path = rrt.InformedRRTStarSearch(animation=show_animation)
     print("Done!!")
 
